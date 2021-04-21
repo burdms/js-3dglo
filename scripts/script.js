@@ -2,47 +2,46 @@ window.addEventListener('DOMContentLoaded', () => {
   // eslint-disable-next-line strict
   ('use strict');
 
-  // Timer
-  function countTimer(deadline) {
-    const timerHours = document.querySelector('#timer-hours'),
-      timerMinutes = document.querySelector('#timer-minutes'),
-      timerSeconds = document.querySelector('#timer-seconds');
-    const interval = setInterval(updateTimer, 1000);
+  function show() {
+    const out = document.querySelector('.out');
 
     function getTimeRemaining() {
-      const dateStop = new Date(deadline).getTime(),
+      const options = { weekday: 'long' },
+        newYear = new Date('1 jan 2022').getTime(),
         dateNow = new Date().getTime(),
-        timeRemaining = (dateStop - dateNow) / 1000,
-        seconds = Math.floor(timeRemaining % 60),
-        minutes = Math.floor((timeRemaining / 60) % 60),
-        hours = Math.floor(timeRemaining / 60 / 60);
+        hour = new Date().getHours(),
+        timeRemaining = Math.floor((newYear - dateNow) / 86400000),
+        currentTime = new Date().toLocaleTimeString('en-US'),
+        day = new Date().toLocaleDateString('ru-RU', options);
 
-      return { timeRemaining, hours, minutes, seconds };
-    }
+      let str = '';
 
-    function updateTimer() {
-      const timer = getTimeRemaining();
-
-      timer.hours < 10
-        ? (timerHours.textContent = '0' + timer.hours)
-        : (timerHours.textContent = timer.hours);
-
-      timer.minutes < 10
-        ? (timerMinutes.textContent = '0' + timer.minutes)
-        : (timerMinutes.textContent = timer.minutes);
-
-      timer.seconds < 10
-        ? (timerSeconds.textContent = '0' + timer.seconds)
-        : (timerSeconds.textContent = timer.seconds);
-
-      if (timer.timeRemaining <= 0) {
-        timerHours.textContent = '00';
-        timerMinutes.textContent = '00';
-        timerSeconds.textContent = '00';
-        clearInterval(interval);
+      if (hour >= 0 && hour < 4) {
+        str = 'Доброй ночи';
+      } else if (hour >= 4 && hour < 12) {
+        str = 'Доброе утро';
+      } else if (hour >= 12 && hour < 16) {
+        str = 'Добрый день';
+      } else {
+        str = 'Добрый вечер';
       }
+
+      return { str, day, currentTime, timeRemaining };
     }
+
+    function updateTime() {
+      const time = getTimeRemaining();
+
+      out.innerHTML = `${time.str}<br>
+                        Сегодня: ${time.day}<br>
+                        Текущее время: ${time.currentTime}<br>
+                        До нового года осталось ${time.timeRemaining} дней`;
+
+      setTimeout(updateTime, 1000);
+    }
+
+    updateTime();
   }
 
-  countTimer('22 april 2021');
+  show();
 });
