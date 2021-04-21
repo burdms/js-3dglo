@@ -2,25 +2,38 @@ window.addEventListener('DOMContentLoaded', () => {
   // eslint-disable-next-line strict
   ('use strict');
 
-  function debounce(fn, delay) {
-    return function (event) {
-      console.log(this);
-      const previousCall = this.lastCall;
-      this.lastCall = Date.now();
+  const div = document.querySelector('div'),
+    play = document.querySelector('#play'),
+    reset = document.querySelector('#reset');
 
-      if (previousCall && this.lastCall - previousCall <= delay) {
-        clearTimeout(this.lastCallTimer);
-      }
+  let interval,
+    count = 0,
+    animate = false;
 
-      this.lastCallTimer = setTimeout(() => fn(event), delay);
-    };
+  function divAnimate() {
+    interval = requestAnimationFrame(divAnimate);
+    count++;
+    if (count < window.innerHeight - 100) {
+      div.style.top = count + 'px';
+    } else {
+      cancelAnimationFrame(divAnimate);
+    }
   }
 
-  function type(event) {
-    document.querySelector('p').textContent = event.target.value;
-  }
+  play.addEventListener('click', () => {
+    if (!animate) {
+      interval = requestAnimationFrame(divAnimate);
+      animate = true;
+    } else {
+      animate = false;
+      cancelAnimationFrame(interval);
+    }
+  });
 
-  document
-    .querySelector('input')
-    .addEventListener('input', debounce(type, 300));
+  reset.addEventListener('click', () => {
+    cancelAnimationFrame(interval);
+    count = 0;
+    animate = false;
+    div.style.top = 0;
+  });
 });
