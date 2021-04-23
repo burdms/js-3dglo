@@ -120,7 +120,21 @@ window.addEventListener('DOMContentLoaded', () => {
     });
   }
 
+  // Smooth scroll for the first screen button
+  function smoothToServices() {
+    const scrollTo = document.querySelector('main>a');
+    scrollTo.addEventListener('click', (event) => {
+      event.preventDefault();
+      const id = scrollTo.getAttribute('href');
+      document.querySelector(id).scrollIntoView({
+        behavior: 'smooth',
+        block: 'start',
+      });
+    });
+  }
+
   countTimer('22 april 2021');
   toggleMenu();
   togglePopup();
+  smoothToServices();
 });
