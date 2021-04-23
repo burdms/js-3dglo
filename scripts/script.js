@@ -72,51 +72,41 @@ window.addEventListener('DOMContentLoaded', () => {
   // }
 
   function toggleMenu() {
-    const menuButton = document.querySelector('.menu'),
-      menu = document.querySelector('menu'),
+    const menu = document.querySelector('menu'),
       menuItems = menu.querySelectorAll('ul>li');
 
     function menuHandler() {
       menu.classList.toggle('active-menu');
     }
 
-    menuButton.addEventListener('click', menuHandler);
-    // menuItems.forEach((item) =>
-    //   item.addEventListener('click', (event) => {
-    //     event.preventDefault();
-    //     const id = item.querySelector('a').getAttribute('href');
-    //     document.querySelector(id).scrollIntoView({
-    //       behavior: 'smooth',
-    //       block: 'start',
-    //     });
-
-    //     menuHandler();
-    //   })
-    // );
-
-    menu.addEventListener('click', (event) => {
+    document.addEventListener('click', (event) => {
       const target = event.target;
 
-      console.log(target.closest('menu'));
-
-      if (target.classList.contains('close-btn')) {
+      if (target.closest('.menu')) {
         menuHandler();
-      }
-
-      menuItems.forEach((item) => {
-        item = item.querySelector('a');
-        if (target === item) {
-          event.preventDefault();
-
-          const id = item.getAttribute('href');
-          document.querySelector(id).scrollIntoView({
-            behavior: 'smooth',
-            block: 'start',
-          });
-
+      } else if (target.closest('menu')) {
+        if (target.classList.contains('close-btn')) {
           menuHandler();
         }
-      });
+
+        menuItems.forEach((item) => {
+          item = item.querySelector('a');
+
+          if (target === item) {
+            event.preventDefault();
+
+            const id = item.getAttribute('href');
+            document.querySelector(id).scrollIntoView({
+              behavior: 'smooth',
+              block: 'start',
+            });
+
+            menuHandler();
+          }
+        });
+      } else {
+        menu.classList.remove('active-menu');
+      }
     });
   }
 
