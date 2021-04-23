@@ -45,46 +45,23 @@ window.addEventListener('DOMContentLoaded', () => {
   }
 
   // Toggle menu
-  // function toggleMenu() {
-  //   const menuButton = document.querySelector('.menu'),
-  //     menu = document.querySelector('menu'),
-  //     menuCloseButton = document.querySelector('.close-btn'),
-  //     menuItems = document.querySelectorAll('ul>li');
-
-  //   function menuHandler() {
-  //     menu.classList.toggle('active-menu');
-  //   }
-
-  //   menuButton.addEventListener('click', menuHandler);
-  //   menuCloseButton.addEventListener('click', menuHandler);
-  //   menuItems.forEach((item) =>
-  //     item.addEventListener('click', (event) => {
-  //       event.preventDefault();
-  //       const id = item.querySelector('a').getAttribute('href');
-  //       document.querySelector(id).scrollIntoView({
-  //         behavior: 'smooth',
-  //         block: 'start',
-  //       });
-
-  //       menuHandler();
-  //     })
-  //   );
-  // }
-
   function toggleMenu() {
-    const menu = document.querySelector('menu'),
+    const menuButton = document.querySelector('.menu'),
+      menu = document.querySelector('menu'),
       menuItems = menu.querySelectorAll('ul>li');
 
     function menuHandler() {
       menu.classList.toggle('active-menu');
     }
 
-    document.addEventListener('click', (event) => {
+    menuButton.addEventListener('click', menuHandler);
+
+    menu.addEventListener('click', (event) => {
       const target = event.target;
 
-      if (target.closest('.menu')) {
-        menuHandler();
-      } else if (target.closest('menu')) {
+      console.log(target);
+
+      if (target.closest('menu')) {
         if (target.classList.contains('close-btn')) {
           menuHandler();
         }
@@ -104,8 +81,6 @@ window.addEventListener('DOMContentLoaded', () => {
             menuHandler();
           }
         });
-      } else {
-        menu.classList.remove('active-menu');
       }
     });
   }
