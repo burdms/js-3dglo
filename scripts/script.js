@@ -45,32 +45,6 @@ window.addEventListener('DOMContentLoaded', () => {
   }
 
   // Toggle menu
-  // function toggleMenu() {
-  //   const menuButton = document.querySelector('.menu'),
-  //     menu = document.querySelector('menu'),
-  //     menuCloseButton = document.querySelector('.close-btn'),
-  //     menuItems = document.querySelectorAll('ul>li');
-
-  //   function menuHandler() {
-  //     menu.classList.toggle('active-menu');
-  //   }
-
-  //   menuButton.addEventListener('click', menuHandler);
-  //   menuCloseButton.addEventListener('click', menuHandler);
-  //   menuItems.forEach((item) =>
-  //     item.addEventListener('click', (event) => {
-  //       event.preventDefault();
-  //       const id = item.querySelector('a').getAttribute('href');
-  //       document.querySelector(id).scrollIntoView({
-  //         behavior: 'smooth',
-  //         block: 'start',
-  //       });
-
-  //       menuHandler();
-  //     })
-  //   );
-  // }
-
   function toggleMenu() {
     const menu = document.querySelector('menu'),
       menuItems = menu.querySelectorAll('ul>li');
