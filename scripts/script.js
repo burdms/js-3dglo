@@ -178,9 +178,106 @@ window.addEventListener('DOMContentLoaded', () => {
     });
   }
 
+  // Slider
+  function slider(time = 7000) {
+    const slider = document.querySelector('.portfolio-content'),
+      slides = document.querySelectorAll('.portfolio-item'),
+      buttons = document.querySelectorAll('.portfolio-btn'),
+      dots = document.querySelectorAll('.dot');
+
+    let currentSlide = 0,
+      interval;
+
+    function prevSlide(elem, index, strClass) {
+      elem[index].classList.remove(strClass);
+    }
+
+    function nextSlide(elem, index, strClass) {
+      elem[index].classList.add(strClass);
+    }
+
+    function autoPlay() {
+      prevSlide(slides, currentSlide, 'portfolio-item-active');
+      prevSlide(dots, currentSlide, 'dot-active');
+
+      currentSlide++;
+
+      if (currentSlide >= slides.length) {
+        currentSlide = 0;
+      }
+
+      nextSlide(slides, currentSlide, 'portfolio-item-active');
+      nextSlide(dots, currentSlide, 'dot-active');
+    }
+
+    function startSlider() {
+      interval = setInterval(autoPlay, time);
+    }
+
+    function stopSlider() {
+      clearInterval(interval);
+    }
+
+    slider.addEventListener('click', (event) => {
+      event.preventDefault();
+
+      const target = event.target;
+
+      if (!target.matches('.portfolio-btn, .dot')) {
+        return;
+      }
+
+      prevSlide(slides, currentSlide, 'portfolio-item-active');
+      prevSlide(dots, currentSlide, 'dot-active');
+
+      if (target.matches('#arrow-right')) {
+        currentSlide++;
+      } else if (target.matches('#arrow-left')) {
+        currentSlide--;
+      } else if (target.matches('.dot')) {
+        dots.forEach((item, index) => {
+          if (item === target) {
+            currentSlide = index;
+          }
+        });
+      }
+
+      if (currentSlide >= slides.length) {
+        currentSlide = 0;
+      }
+      if (currentSlide < 0) {
+        currentSlide = slides.length - 1;
+      }
+
+      nextSlide(slides, currentSlide, 'portfolio-item-active');
+      nextSlide(dots, currentSlide, 'dot-active');
+    });
+
+    slider.addEventListener('mouseover', (event) => {
+      if (
+        event.target.matches('.portfolio-btn') ||
+        event.target.matches('.dot')
+      ) {
+        stopSlider();
+      }
+    });
+
+    slider.addEventListener('mouseout', (event) => {
+      if (
+        event.target.matches('.portfolio-btn') ||
+        event.target.matches('.dot')
+      ) {
+        startSlider();
+      }
+    });
+
+    startSlider();
+  }
+
   countTimer('22 april 2021');
   toggleMenu();
   togglePopup();
   smoothToServices();
   switchTabs();
+  slider();
 });
