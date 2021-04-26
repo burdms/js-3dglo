@@ -269,21 +269,11 @@ window.addEventListener('DOMContentLoaded', () => {
     });
 
     slider.addEventListener('mouseover', (event) => {
-      if (
-        event.target.matches('.portfolio-btn') ||
-        event.target.matches('.dot')
-      ) {
-        stopSlider();
-      }
+      stopSlider();
     });
 
     slider.addEventListener('mouseout', (event) => {
-      if (
-        event.target.matches('.portfolio-btn') ||
-        event.target.matches('.dot')
-      ) {
-        startSlider();
-      }
+      startSlider();
     });
 
     createDots();
