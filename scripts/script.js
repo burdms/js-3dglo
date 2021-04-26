@@ -268,11 +268,11 @@ window.addEventListener('DOMContentLoaded', () => {
       nextSlide(dots, currentSlide, 'dot-active');
     });
 
-    slider.addEventListener('mouseover', (event) => {
+    slider.addEventListener('mouseover', () => {
       stopSlider();
     });
 
-    slider.addEventListener('mouseout', (event) => {
+    slider.addEventListener('mouseout', () => {
       startSlider();
     });
 
