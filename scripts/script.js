@@ -182,10 +182,25 @@ window.addEventListener('DOMContentLoaded', () => {
   function slider(time = 7000) {
     const slider = document.querySelector('.portfolio-content'),
       slides = document.querySelectorAll('.portfolio-item'),
-      dots = document.querySelectorAll('.dot');
+      dotsContainer = document.querySelector('.portfolio-dots'),
+      dots = [];
 
     let currentSlide = 0,
       interval;
+
+    function createDots() {
+      for (let i = 0; i < slides.length; i++) {
+        const li = document.createElement('li');
+        li.classList.add('dot');
+
+        if (i === 0) {
+          li.classList.add('dot-active');
+        }
+
+        dots.push(li);
+        dotsContainer.append(li);
+      }
+    }
 
     function prevSlide(elem, index, strClass) {
       elem[index].classList.remove(strClass);
@@ -270,6 +285,7 @@ window.addEventListener('DOMContentLoaded', () => {
       }
     });
 
+    createDots();
     startSlider();
   }
 
