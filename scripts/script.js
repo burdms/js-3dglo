@@ -107,6 +107,7 @@ window.addEventListener('DOMContentLoaded', () => {
       popup.style.display = 'none';
       count = 0;
       cancelAnimationFrame(interval);
+      popup.getElementsByTagName('form')[0].reset();
     }
 
     popupButton.forEach((item) => {
