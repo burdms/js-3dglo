@@ -298,10 +298,84 @@ window.addEventListener('DOMContentLoaded', () => {
       const target = event.target;
 
       if (target.classList.contains('command__photo')) {
+        // Не уверен нужно ли, но следующий ИФ для проверки,
+        // когда курсор НА фотке во время перезагрузки страницы. Чтобы он не присвоил пустоту, когда уберешь
+        // По крайней мере, логика такая у меня была : )
+
         if (defaultSrc) {
           target.src = defaultSrc;
         }
       }
+    });
+  }
+
+  // Only numbers input check
+  function typeNums(event) {
+    const input = event.target;
+
+    input.value = input.value.replace(/[^\d]/, '');
+  }
+
+  // Only cyrillic, space, and dash
+  function typeLetters(event) {
+    const input = event.target;
+
+    input.value = input.value.replace(/[^А-ЯЁ\-\ ]/gi, '');
+  }
+
+  // Only latin, and @, -, _, ., !, ~, *, '
+  function typeEmail(event) {
+    const input = event.target;
+
+    input.value = input.value.replace(/[^A-Z@-_.!~*'\S]/gi, '');
+  }
+
+  // Only numbers, parentheses, and dash
+  function typeTel(event) {
+    const input = event.target;
+
+    input.value = input.value.replace(/[^0-9()-]/gi, '');
+  }
+
+  // Check calc inputs
+  function checkCaclInputs() {
+    document.querySelectorAll('.calc-block input').forEach((item) => {
+      item.addEventListener('input', typeNums);
+    });
+  }
+
+  // Check text inputs
+  function checkTextInputs() {
+    document.querySelectorAll('input[placeholder="Ваше имя"], input[placeholder="Ваше сообщение"]').forEach((item) => {
+      item.addEventListener('input', typeLetters);
+    });
+  }
+
+  // Check email inputs
+  function checkEmailInputs() {
+    document.querySelectorAll('input[type="email"]').forEach((item) => {
+      item.setAttribute('type', 'text');
+      item.addEventListener('input', typeEmail);
+    });
+  }
+
+  // Check phone inputs
+  function checkPhoneInputs() {
+    document.querySelectorAll('input[type="tel"]').forEach((item) => {
+      item.addEventListener('input', typeTel);
+    });
+  }
+
+  function checkAllInputs() {
+    document.querySelectorAll('input').forEach(item => {
+      item.addEventListener('blur', () => {
+        item.value = item.value.replace(/-+/g, '-');
+        item.value = item.value.replace(/ +/g, ' ');
+        item.value = item.value.replace(/^(-| )+/g, '');
+        item.value = item.value.replace(/(-| )$/g, '');
+        item.value = item.value.replace(/^./g, char => char.toUpperCase());
+        item.value = item.value.replace(/(?!^).*/, char => char.toLowerCase());
+      });
     });
   }
 
@@ -312,4 +386,9 @@ window.addEventListener('DOMContentLoaded', () => {
   switchTabs();
   slider();
   teamPhotoSwitcher();
+  checkCaclInputs();
+  checkTextInputs();
+  checkEmailInputs();
+  checkPhoneInputs();
+  checkAllInputs();
 });
