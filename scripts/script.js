@@ -366,6 +366,7 @@ window.addEventListener('DOMContentLoaded', () => {
     });
   }
 
+  // Check all inputs
   function checkAllInputs() {
     document.querySelectorAll('input').forEach(item => {
       item.addEventListener('blur', () => {
