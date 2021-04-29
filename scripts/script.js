@@ -396,7 +396,7 @@ window.addEventListener('DOMContentLoaded', () => {
   function countSum(price) {
     let total = 0,
       countValue = 1,
-      dayValue = 10;
+      dayValue = 1;
 
     const calcType = document.querySelector('.calc-type'),
       calcSquare = document.querySelector('.calc-square'),
