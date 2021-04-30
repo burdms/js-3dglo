@@ -420,7 +420,7 @@ window.addEventListener('DOMContentLoaded', () => {
       total = price * typeValue * squareValue * countValue * dayValue;
     }
 
-    calcTotal.textContent = total;
+    calcTotal.textContent = Math.floor(total);
   }
 
   countTimer('22 april 2021');
