@@ -448,6 +448,7 @@
                   </div>
                   <div class="col-md-12 col-sm-12 col-12">
                     <input
+                      type="text"
                       class="mess"
                       id="form2-message"
                       name="user_message"
@@ -570,6 +571,89 @@
         </div>
       </div>
     </div>
+
+    <script src="./assets/validate/validate.js"></script>
+    
+    <script>
+      const validateForm1 = new Validate({
+        selector: '#form1',
+        pattern: {
+          tel: /^\+?380\d{7}$/,
+          zip: /^\d{5,6}$/,
+          text: /[а-яё]/gi,
+        },
+        method: {
+          'tel': [
+            ['notEmpty'],
+            ['pattern', 'tel']
+          ],
+
+          'email': [
+            ['notEmpty'],
+            ['pattern', 'email']
+          ],
+
+          'text': [
+            ['notEmpty'],
+            ['pattern', 'text']
+          ],
+        },
+      });
+
+      const validateForm3 = new Validate({
+        selector: '#form3',
+        pattern: {
+          tel: /^\+?380\d{7}$/,
+          zip: /^\d{5,6}$/,
+          text: /[а-яё]/gi,
+        },
+        method: {
+          'tel': [
+            ['notEmpty'],
+            ['pattern', 'tel']
+          ],
+
+          'email': [
+            ['notEmpty'],
+            ['pattern', 'email']
+          ],
+
+          'text': [
+            ['notEmpty'],
+            ['pattern', 'text']
+          ],
+        },
+      });
+
+const validateForm2 = new Validate({
+        selector: '#form2',
+        pattern: {
+          tel: /^\+?380\d{7}$/,
+          zip: /^\d{5,6}$/,
+          text: /[а-яё]/gi,
+        },
+        method: {
+          'tel': [
+            ['notEmpty'],
+            ['pattern', 'tel']
+          ],
+
+          'email': [
+            ['notEmpty'],
+            ['pattern', 'email']
+          ],
+
+          'text': [
+            ['notEmpty'],
+            ['pattern', 'text']
+          ],
+        },
+      });
+
+      validateForm1.init();
+      validateForm2.init();
+      validateForm3.init();
+    </script>
 
     <script src="./scripts/script.js"></script>
   </body>

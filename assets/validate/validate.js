@@ -3,7 +3,7 @@
 ('use strict');
 
 class Validate {
-  constructor({selector, pattern = {}, method}) {
+  constructor({ selector, pattern = {}, method }) {
     this.form = document.querySelector(selector);
     this.pattern = pattern;
     this.method = method;
@@ -23,8 +23,7 @@ class Validate {
     this.elementsForm.forEach(elem => elem.addEventListener('change', this.checkIt.bind(this)));
 
     this.form.addEventListener('submit', event => {
-      event.preventDefault();
-      this.elementsForm.forEach(elem => this.checkIt({target: elem}));
+      this.elementsForm.forEach(elem => this.checkIt({ target: elem }));
       if (this.error.size) {
         event.preventDefault();
       }
@@ -47,8 +46,10 @@ class Validate {
     };
 
     if (this.method) {
-      const method = this.method[elem.id];
+      const method = this.method[elem.type];
+      // const method = this.method[elem.id];
 
+      console.log(elem.type);
       if (method) {
         return method.every(item => validateMethod[item[0]](elem, this.pattern[item[1]]));
       }
@@ -115,8 +116,8 @@ class Validate {
   }
 
   setPattern() {
-    if (!this.pattern.phone) {
-      this.pattern.phone = /^\+?[78]([-()]*\d){10}$/;
+    if (!this.pattern.tel) {
+      this.pattern.tel = /^\+?[78]([-()]*\d){10}$/;
     }
 
     if (!this.pattern.email) {

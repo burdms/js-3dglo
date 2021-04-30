@@ -354,7 +354,6 @@ window.addEventListener('DOMContentLoaded', () => {
   // Check email inputs
   function checkEmailInputs() {
     document.querySelectorAll('input[type="email"]').forEach((item) => {
-      item.setAttribute('type', 'text');
       item.addEventListener('input', typeEmail);
     });
   }
