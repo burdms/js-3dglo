@@ -404,7 +404,8 @@ window.addEventListener('DOMContentLoaded', () => {
       calcDay = document.querySelector('.calc-day'),
       calcTotal = document.getElementById('total'),
       typeValue = calcType.options[calcType.selectedIndex].value,
-      squareValue = +calcSquare.value;
+      squareValue = +calcSquare.value,
+      currentTotalValue = +calcTotal.textContent;
 
     if (calcCount.value > 1) {
       countValue += (calcCount.value - 1) / 10;
@@ -419,8 +420,26 @@ window.addEventListener('DOMContentLoaded', () => {
     if (typeValue && squareValue) {
       total = price * typeValue * squareValue * countValue * dayValue;
     }
+    
+    calcTotalAnimate(currentTotalValue, Math.floor(total));
+  }
 
-    calcTotal.textContent = total;
+  function calcTotalAnimate(current, total) {
+    const calcTotal = document.getElementById('total');
+
+    let interval;
+
+    interval = setInterval(() => {
+      if (current < total) {
+        current += 100;
+        calcTotal.textContent = current;
+      } else if (current > total) {
+        current -= 100;
+        calcTotal.textContent = current;
+      } else {
+        clearInterval(interval);
+      }
+    }, 10);
   }
 
   countTimer('22 april 2021');
