@@ -327,7 +327,7 @@ window.addEventListener('DOMContentLoaded', () => {
   function typeEmail(event) {
     const input = event.target;
 
-    input.value = input.value.replace(/[^A-Z@-_.!~*'\S]/gi, '');
+    input.value = input.value.replace(/[^A-Z@-_.!~*']/gi, '');
   }
 
   // Only numbers, parentheses, and dash
