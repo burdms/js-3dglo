@@ -354,7 +354,6 @@ window.addEventListener('DOMContentLoaded', () => {
   // Check email inputs
   function checkEmailInputs() {
     document.querySelectorAll('input[type="email"]').forEach(item => {
-      item.setAttribute('type', 'text');
       item.addEventListener('input', typeEmail);
     });
   }
@@ -374,8 +373,12 @@ window.addEventListener('DOMContentLoaded', () => {
         item.value = item.value.replace(/ +/g, ' ');
         item.value = item.value.replace(/^(-| )+/g, '');
         item.value = item.value.replace(/(-| )$/g, '');
-        item.value = item.value.replace(/^./g, char => char.toUpperCase());
-        item.value = item.value.replace(/(?!^).*/, char => char.toLowerCase());
+        if (item.type !== 'email') {
+          item.value = item.value.replace(/^./g, char => char.toUpperCase());
+          item.value = item.value.replace(/(?!^).*/, char => char.toLowerCase());
+        } else {
+          item.value = item.value.replace(/.*/, char => char.toLowerCase());
+        }
       });
     });
   }
