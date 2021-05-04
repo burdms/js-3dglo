@@ -53,7 +53,7 @@ window.addEventListener('DOMContentLoaded', () => {
       menu.classList.toggle('active-menu');
     }
 
-    document.addEventListener('click', (event) => {
+    document.addEventListener('click', event => {
       const target = event.target;
 
       if (target.closest('.menu')) {
@@ -63,7 +63,7 @@ window.addEventListener('DOMContentLoaded', () => {
           menuHandler();
         }
 
-        menuItems.forEach((item) => {
+        menuItems.forEach(item => {
           item = item.querySelector('a');
 
           if (target === item) {
@@ -110,7 +110,7 @@ window.addEventListener('DOMContentLoaded', () => {
       popup.querySelector('form').reset();
     }
 
-    popupButton.forEach((item) => {
+    popupButton.forEach(item => {
       item.addEventListener('click', () => {
         if (screen.availWidth > 768) {
           popup.style.opacity = '0';
@@ -122,7 +122,7 @@ window.addEventListener('DOMContentLoaded', () => {
       });
     });
 
-    popup.addEventListener('click', (event) => {
+    popup.addEventListener('click', event => {
       const target = event.target;
 
       if (target.classList.contains('popup-close')) {
@@ -138,7 +138,7 @@ window.addEventListener('DOMContentLoaded', () => {
   // Smooth scroll for the first screen button
   function smoothToServices() {
     const scrollTo = document.querySelector('main>a');
-    scrollTo.addEventListener('click', (event) => {
+    scrollTo.addEventListener('click', event => {
       event.preventDefault();
       const id = scrollTo.getAttribute('href');
       document.querySelector(id).scrollIntoView({
@@ -166,7 +166,7 @@ window.addEventListener('DOMContentLoaded', () => {
       });
     }
 
-    tabHeader.addEventListener('click', (event) => {
+    tabHeader.addEventListener('click', event => {
       const target = event.target.closest('.service-header-tab');
 
       if (target) {
@@ -233,7 +233,7 @@ window.addEventListener('DOMContentLoaded', () => {
       clearInterval(interval);
     }
 
-    slider.addEventListener('click', (event) => {
+    slider.addEventListener('click', event => {
       event.preventDefault();
 
       const target = event.target;
@@ -285,7 +285,7 @@ window.addEventListener('DOMContentLoaded', () => {
     const teamBlock = document.getElementById('command');
     let defaultSrc;
 
-    teamBlock.addEventListener('mouseover', (event) => {
+    teamBlock.addEventListener('mouseover', event => {
       const target = event.target;
 
       if (target.classList.contains('command__photo')) {
@@ -294,7 +294,7 @@ window.addEventListener('DOMContentLoaded', () => {
       }
     });
 
-    teamBlock.addEventListener('mouseout', (event) => {
+    teamBlock.addEventListener('mouseout', event => {
       const target = event.target;
 
       if (target.classList.contains('command__photo')) {
@@ -320,14 +320,13 @@ window.addEventListener('DOMContentLoaded', () => {
   function typeLetters(event) {
     const input = event.target;
 
-    input.value = input.value.replace(/[^А-ЯЁ\-\ ]/gi, '');
+    input.value = input.value.replace(/[^А-ЯЁ\- ]/gi, '');
   }
 
   // Only latin, and @, -, _, ., !, ~, *, '
   function typeEmail(event) {
     const input = event.target;
-
-    input.value = input.value.replace(/[^A-Z@-_.!~*'\S]/gi, '');
+    input.value = input.value.replace(/[^A-Z@-_.!~*']/gi, '');
   }
 
   // Only numbers, parentheses, and dash
@@ -339,28 +338,28 @@ window.addEventListener('DOMContentLoaded', () => {
 
   // Check calc inputs
   function checkCaclInputs() {
-    document.querySelectorAll('.calc-block input').forEach((item) => {
+    document.querySelectorAll('.calc-block input').forEach(item => {
       item.addEventListener('input', typeNums);
     });
   }
 
   // Check text inputs
   function checkTextInputs() {
-    document.querySelectorAll('input[placeholder="Ваше имя"], input[placeholder="Ваше сообщение"]').forEach((item) => {
+    document.querySelectorAll('input[placeholder="Ваше имя"], input[placeholder="Ваше сообщение"]').forEach(item => {
       item.addEventListener('input', typeLetters);
     });
   }
 
   // Check email inputs
   function checkEmailInputs() {
-    document.querySelectorAll('input[type="email"]').forEach((item) => {
+    document.querySelectorAll('input[type="email"]').forEach(item => {
       item.addEventListener('input', typeEmail);
     });
   }
 
   // Check phone inputs
   function checkPhoneInputs() {
-    document.querySelectorAll('input[type="tel"]').forEach((item) => {
+    document.querySelectorAll('input[type="tel"]').forEach(item => {
       item.addEventListener('input', typeTel);
     });
   }
@@ -373,8 +372,12 @@ window.addEventListener('DOMContentLoaded', () => {
         item.value = item.value.replace(/ +/g, ' ');
         item.value = item.value.replace(/^(-| )+/g, '');
         item.value = item.value.replace(/(-| )$/g, '');
-        item.value = item.value.replace(/^./g, char => char.toUpperCase());
-        item.value = item.value.replace(/(?!^).*/, char => char.toLowerCase());
+        if (item.type !== 'email') {
+          item.value = item.value.replace(/^./g, char => char.toUpperCase());
+          item.value = item.value.replace(/(?!^).*/, char => char.toLowerCase());
+        } else {
+          item.value = item.value.replace(/.*/, char => char.toLowerCase());
+        }
       });
     });
   }
@@ -419,16 +422,14 @@ window.addEventListener('DOMContentLoaded', () => {
     if (typeValue && squareValue) {
       total = price * typeValue * squareValue * countValue * dayValue;
     }
-    
+
     calcTotalAnimate(currentTotalValue, Math.floor(total));
   }
 
   function calcTotalAnimate(current, total) {
     const calcTotal = document.getElementById('total');
 
-    let interval;
-
-    interval = setInterval(() => {
+    const interval = setInterval(() => {
       if (current < total) {
         current += 100;
         calcTotal.textContent = current;
