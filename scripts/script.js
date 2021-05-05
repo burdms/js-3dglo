@@ -397,17 +397,18 @@ window.addEventListener('DOMContentLoaded', () => {
   }
 
   function countSum(price) {
-    let total = 0,
-      countValue = 1,
-      dayValue = 1;
-
     const calcType = document.querySelector('.calc-type'),
       calcSquare = document.querySelector('.calc-square'),
       calcCount = document.querySelector('.calc-count'),
       calcDay = document.querySelector('.calc-day'),
       calcTotal = document.getElementById('total'),
       typeValue = calcType.options[calcType.selectedIndex].value,
-      squareValue = +calcSquare.value,
+      squareValue = +calcSquare.value;
+
+    let total = 0,
+      countValue = 1,
+      dayValue = 1,
+      interval,
       currentTotalValue = +calcTotal.textContent;
 
     if (calcCount.value > 1) {
@@ -421,23 +422,41 @@ window.addEventListener('DOMContentLoaded', () => {
     }
 
     if (typeValue && squareValue) {
-      total = price * typeValue * squareValue * countValue * dayValue;
+      total = Math.floor(price * typeValue * squareValue * countValue * dayValue);
     }
 
-    calcTotalAnimate(currentTotalValue, Math.floor(total));
+    calcTotalAnimate();
 
-    function calcTotalAnimate(current, total) {
-      const interval = setInterval(() => {
-        if (current < total) {
-          current += 10;
-          calcTotal.textContent = current;
-        } else if (current > total) {
-          current -= 10;
-          calcTotal.textContent = current;
-        } else {
-          clearInterval(interval);
-        }
-      }, 10);
+    // function calcTotalAnimate(current, total) {
+    //   const interval = setInterval(() => {
+    //     if (current < total) {
+    //       current += 10;
+    //       calcTotal.textContent = current;
+    //     } else if (current > total) {
+    //       current -= 10;
+    //       calcTotal.textContent = current;
+    //     } else {
+    //       clearInterval(interval);
+    //     }
+    //   }, 10);
+    // }
+
+    if(typeValue) console.log(typeValue);
+    if(squareValue) console.log(squareValue);
+    console.log("***");
+
+    function calcTotalAnimate() {
+      interval = requestAnimationFrame(calcTotalAnimate);
+
+      if (currentTotalValue < total) {
+        currentTotalValue += 20;
+        calcTotal.textContent = currentTotalValue;
+      } else if (currentTotalValue > total) {
+        currentTotalValue -= 20;
+        calcTotal.textContent = currentTotalValue;
+      } else {
+        cancelAnimationFrame(calcTotalAnimate);
+      }
     }
   }
 
