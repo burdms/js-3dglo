@@ -441,18 +441,14 @@ window.addEventListener('DOMContentLoaded', () => {
     //   }, 10);
     // }
 
-    if(typeValue) console.log(typeValue);
-    if(squareValue) console.log(squareValue);
-    console.log("***");
-
     function calcTotalAnimate() {
       interval = requestAnimationFrame(calcTotalAnimate);
 
       if (currentTotalValue < total) {
-        currentTotalValue += 20;
+        currentTotalValue += 10;
         calcTotal.textContent = currentTotalValue;
       } else if (currentTotalValue > total) {
-        currentTotalValue -= 20;
+        currentTotalValue -= 10;
         calcTotal.textContent = currentTotalValue;
       } else {
         cancelAnimationFrame(calcTotalAnimate);
