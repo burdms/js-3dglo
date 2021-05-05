@@ -423,27 +423,24 @@ window.addEventListener('DOMContentLoaded', () => {
     if (typeValue && squareValue) {
       total = price * typeValue * squareValue * countValue * dayValue;
     }
-    
+
     calcTotalAnimate(currentTotalValue, Math.floor(total));
+
+    function calcTotalAnimate(current, total) {
+      const interval = setInterval(() => {
+        if (current < total) {
+          current += 10;
+          calcTotal.textContent = current;
+        } else if (current > total) {
+          current -= 10;
+          calcTotal.textContent = current;
+        } else {
+          clearInterval(interval);
+        }
+      }, 10);
+    }
   }
 
-  function calcTotalAnimate(current, total) {
-    const calcTotal = document.getElementById('total');
-
-    let interval;
-
-    interval = setInterval(() => {
-      if (current < total) {
-        current += 100;
-        calcTotal.textContent = current;
-      } else if (current > total) {
-        current -= 100;
-        calcTotal.textContent = current;
-      } else {
-        clearInterval(interval);
-      }
-    }, 10);
-  }
 
   countTimer('22 april 2021');
   toggleMenu();
