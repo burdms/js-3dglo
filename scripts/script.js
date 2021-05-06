@@ -384,6 +384,18 @@ window.addEventListener('DOMContentLoaded', () => {
   }
 
   // Calculator
+  function debounce(f, t) {
+    return function(args) {
+      const previousCall = this.lastCall;
+      this.lastCall = Date.now();
+      if (previousCall && ((this.lastCall - previousCall) <= t)) {
+        clearTimeout(this.lastCallTimer);
+      }
+      this.lastCallTimer = setTimeout(() => f(args), t);
+    };
+  }
+
+
   function calculator(price) {
     const calcBlock = document.querySelector('.calc-block');
 
@@ -391,12 +403,13 @@ window.addEventListener('DOMContentLoaded', () => {
       const target = event.target;
 
       if (target.matches('select') || target.matches('input')) {
-        countSum(price);
+        const debouncedCountSum = debounce(countSum, 300);
+        debouncedCountSum(price);
       }
     });
   }
 
-  function countSum(price) {
+  function countSum(args) {
     const calcType = document.querySelector('.calc-type'),
       calcSquare = document.querySelector('.calc-square'),
       calcCount = document.querySelector('.calc-count'),
@@ -423,7 +436,7 @@ window.addEventListener('DOMContentLoaded', () => {
     }
 
     if (typeValue && squareValue) {
-      total = Math.floor(price * typeValue * squareValue * countValue * dayValue);
+      total = Math.floor(args * typeValue * squareValue * countValue * dayValue);
     }
 
     if (currentTotalValue < total) {
