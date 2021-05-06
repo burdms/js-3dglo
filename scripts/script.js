@@ -409,6 +409,7 @@ window.addEventListener('DOMContentLoaded', () => {
       countValue = 1,
       dayValue = 1,
       interval,
+      step,
       currentTotalValue = +calcTotal.textContent;
 
     if (calcCount.value > 1) {
@@ -425,32 +426,23 @@ window.addEventListener('DOMContentLoaded', () => {
       total = Math.floor(price * typeValue * squareValue * countValue * dayValue);
     }
 
-    calcTotalAnimate();
-    // calcTotalAnimate(currentTotalValue, total);
+    if (currentTotalValue < total) {
+      step = Math.ceil((total - currentTotalValue) * 0.1);
+    } else if (currentTotalValue > total) {
+      step = Math.ceil((currentTotalValue - total) * 0.1);
+    }
 
-    // function calcTotalAnimate(current, total) {
-    //   const interval = setInterval(() => {
-    //     if (current < total) {
-    //       current += (total * 0.1);
-    //       calcTotal.textContent = current;
-    //     } else if (current > total) {
-    //       current -= (total * 0.1);
-    //       calcTotal.textContent = current;
-    //     } else {
-    //       clearInterval(interval);
-    //     }
-    //   }, 10);
-    // }
+    calcTotalAnimate();
 
 
     function calcTotalAnimate() {
       interval = requestAnimationFrame(calcTotalAnimate);
 
       if (currentTotalValue < total) {
-        currentTotalValue += Math.ceil((total - currentTotalValue) * 0.1);
+        currentTotalValue += step;
         calcTotal.textContent = currentTotalValue;
       } else if (currentTotalValue > total) {
-        currentTotalValue -= Math.ceil((currentTotalValue - total) * 0.1);
+        currentTotalValue -= step;
         calcTotal.textContent = currentTotalValue;
       } else {
         cancelAnimationFrame(calcTotalAnimate);
