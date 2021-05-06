@@ -382,7 +382,7 @@ window.addEventListener('DOMContentLoaded', () => {
     });
   }
 
-  // Calculator
+// Calculator
   function calculator(price) {
     const calcBlock = document.querySelector('.calc-block');
 
@@ -396,17 +396,18 @@ window.addEventListener('DOMContentLoaded', () => {
   }
 
   function countSum(price) {
-    let total = 0,
-      countValue = 1,
-      dayValue = 1;
-
     const calcType = document.querySelector('.calc-type'),
       calcSquare = document.querySelector('.calc-square'),
       calcCount = document.querySelector('.calc-count'),
       calcDay = document.querySelector('.calc-day'),
       calcTotal = document.getElementById('total'),
       typeValue = calcType.options[calcType.selectedIndex].value,
-      squareValue = +calcSquare.value,
+      squareValue = +calcSquare.value;
+
+    let total = 0,
+      countValue = 1,
+      dayValue = 1,
+      interval,
       currentTotalValue = +calcTotal.textContent;
 
     if (calcCount.value > 1) {
@@ -420,26 +421,38 @@ window.addEventListener('DOMContentLoaded', () => {
     }
 
     if (typeValue && squareValue) {
-      total = price * typeValue * squareValue * countValue * dayValue;
+      total = Math.floor(price * typeValue * squareValue * countValue * dayValue);
     }
 
-    calcTotalAnimate(currentTotalValue, Math.floor(total));
-  }
+    calcTotalAnimate();
 
-  function calcTotalAnimate(current, total) {
-    const calcTotal = document.getElementById('total');
+    // function calcTotalAnimate(current, total) {
+    //   const interval = setInterval(() => {
+    //     if (current < total) {
+    //       current += 10;
+    //       calcTotal.textContent = current;
+    //     } else if (current > total) {
+    //       current -= 10;
+    //       calcTotal.textContent = current;
+    //     } else {
+    //       clearInterval(interval);
+    //     }
+    //   }, 10);
+    // }
 
-    const interval = setInterval(() => {
-      if (current < total) {
-        current += 100;
-        calcTotal.textContent = current;
-      } else if (current > total) {
-        current -= 100;
-        calcTotal.textContent = current;
+    function calcTotalAnimate() {
+      interval = requestAnimationFrame(calcTotalAnimate);
+
+      if (currentTotalValue < total) {
+        currentTotalValue += 10;
+        calcTotal.textContent = currentTotalValue;
+      } else if (currentTotalValue > total) {
+        currentTotalValue -= 10;
+        calcTotal.textContent = currentTotalValue;
       } else {
-        clearInterval(interval);
+        cancelAnimationFrame(calcTotalAnimate);
       }
-    }, 10);
+    }
   }
 
   countTimer('22 april 2021');
