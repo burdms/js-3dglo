@@ -426,14 +426,15 @@ window.addEventListener('DOMContentLoaded', () => {
     }
 
     calcTotalAnimate();
+    // calcTotalAnimate(currentTotalValue, total);
 
     // function calcTotalAnimate(current, total) {
     //   const interval = setInterval(() => {
     //     if (current < total) {
-    //       current += 10;
+    //       current += (total * 0.1);
     //       calcTotal.textContent = current;
     //     } else if (current > total) {
-    //       current -= 10;
+    //       current -= (total * 0.1);
     //       calcTotal.textContent = current;
     //     } else {
     //       clearInterval(interval);
@@ -441,14 +442,15 @@ window.addEventListener('DOMContentLoaded', () => {
     //   }, 10);
     // }
 
+
     function calcTotalAnimate() {
       interval = requestAnimationFrame(calcTotalAnimate);
 
       if (currentTotalValue < total) {
-        currentTotalValue += 10;
+        currentTotalValue += Math.ceil((total - currentTotalValue) * 0.1);
         calcTotal.textContent = currentTotalValue;
       } else if (currentTotalValue > total) {
-        currentTotalValue -= 10;
+        currentTotalValue -= Math.ceil((currentTotalValue - total) * 0.1);
         calcTotal.textContent = currentTotalValue;
       } else {
         cancelAnimationFrame(calcTotalAnimate);
