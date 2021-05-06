@@ -336,6 +336,13 @@ window.addEventListener('DOMContentLoaded', () => {
     input.value = input.value.replace(/[^0-9+]/gi, '');
   }
 
+  // Only cyrillic, space, and punctuation marks
+  function typeTextArea(event) {
+    const input = event.target;
+
+    input.value = input.value.replace(/[^А-ЯЁ0-9,.?!:;\- ]/gi, '');
+  }
+
   // Check calc inputs
   function checkCaclInputs() {
     document.querySelectorAll('.calc-block input').forEach(item => {
@@ -345,8 +352,15 @@ window.addEventListener('DOMContentLoaded', () => {
 
   // Check text inputs
   function checkTextInputs() {
-    document.querySelectorAll('input[placeholder="Ваше имя"], input[placeholder="Ваше сообщение"]').forEach(item => {
+    document.querySelectorAll('input[placeholder="Ваше имя"]').forEach(item => {
       item.addEventListener('input', typeLetters);
+    });
+  }
+
+  // Check text area
+  function checkTextArea() {
+    document.querySelectorAll('input[placeholder="Ваше сообщение"]').forEach(item => {
+      item.addEventListener('input', typeTextArea);
     });
   }
 
@@ -467,6 +481,7 @@ window.addEventListener('DOMContentLoaded', () => {
   checkTextInputs();
   checkEmailInputs();
   checkPhoneInputs();
+  checkTextArea();
   checkAllInputs();
   calculator(100);
 });
