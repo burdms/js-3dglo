@@ -382,7 +382,7 @@ window.addEventListener('DOMContentLoaded', () => {
     });
   }
 
-// Calculator
+  // Calculator
   function calculator(price) {
     const calcBlock = document.querySelector('.calc-block');
 
@@ -395,6 +395,7 @@ window.addEventListener('DOMContentLoaded', () => {
     });
   }
 
+  // Calculator sum counter
   function countSum(price) {
     const calcType = document.querySelector('.calc-type'),
       calcSquare = document.querySelector('.calc-square'),
