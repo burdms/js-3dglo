@@ -470,6 +470,63 @@ window.addEventListener('DOMContentLoaded', () => {
     }
   }
 
+  // Send form
+  function sendForm(formID) {
+    const errorMessage = 'Что-то пошло не так...',
+      successMessage = 'Спасибо! Мы скоро с вами свяжемся',
+      loadingMessage = 'Загрузка...';
+
+    const form = document.getElementById(formID),
+      statusMessage = document.createElement('div');
+
+    statusMessage.style.cssText = 'font-size: 2rem; color: #fff;';
+
+    form.addEventListener('submit', event => {
+      event.preventDefault();
+
+      form.appendChild(statusMessage);
+      statusMessage.textContent = loadingMessage;
+
+      const formData = new FormData(form),
+        body = {};
+
+      formData.forEach((value, key) => {
+        body[key] = value;
+      });
+
+      postData(body,
+        () => {
+          statusMessage.textContent = successMessage;
+        }, error => {
+          statusMessage.textContent = errorMessage;
+          console.error(error);
+        });
+    });
+
+    function postData(body, outputData, errorData) {
+      const request = new XMLHttpRequest();
+
+      request.addEventListener('readystatechange', () => {
+        if (request.readyState !== 4) {
+          return;
+        }
+
+        if (request.status === 200) {
+          outputData();
+
+          form.reset();
+        } else {
+          errorData(request.status);
+        }
+      });
+
+      request.open('POST', './server.php');
+      request.setRequestHeader('Content-Type', 'application/json');
+
+      request.send(JSON.stringify(body));
+    }
+  }
+
   countTimer('22 april 2021');
   toggleMenu();
   togglePopup();
@@ -484,4 +541,7 @@ window.addEventListener('DOMContentLoaded', () => {
   checkTextArea();
   checkAllInputs();
   calculator(100);
+  sendForm('form1');
+  sendForm('form2');
+  sendForm('form3');
 });
