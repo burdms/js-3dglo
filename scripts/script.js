@@ -427,25 +427,26 @@ window.addEventListener('DOMContentLoaded', () => {
     }
 
     if (currentTotalValue < total) {
-      step = Math.ceil((total - currentTotalValue) * 0.1);
+      step = (total - currentTotalValue) * 0.1;
     } else if (currentTotalValue > total) {
-      step = Math.ceil((currentTotalValue - total) * 0.1);
+      step = (currentTotalValue - total) * 0.1;
     }
 
     calcTotalAnimate();
-
 
     function calcTotalAnimate() {
       interval = requestAnimationFrame(calcTotalAnimate);
 
       if (currentTotalValue < total) {
-        currentTotalValue += step;
+        currentTotalValue += Math.floor(step);
         calcTotal.textContent = currentTotalValue;
       } else if (currentTotalValue > total) {
-        currentTotalValue -= step;
+        currentTotalValue -= Math.floor(step);
         calcTotal.textContent = currentTotalValue;
-      } else {
-        cancelAnimationFrame(calcTotalAnimate);
+      } else if (currentTotalValue !== 0 && total !== 0 && currentTotalValue === total) {
+        console.log(2);
+        cancelAnimationFrame(interval);
+        return;
       }
     }
   }
