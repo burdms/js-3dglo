@@ -397,6 +397,17 @@ window.addEventListener('DOMContentLoaded', () => {
   }
 
   // Calculator
+  function debounce(f, t) {
+    return function(args) {
+      const previousCall = this.lastCall;
+      this.lastCall = Date.now();
+      if (previousCall && ((this.lastCall - previousCall) <= t)) {
+        clearTimeout(this.lastCallTimer);
+      }
+      this.lastCallTimer = setTimeout(() => f(args), t);
+    };
+  }
+
   function calculator(price) {
     const calcBlock = document.querySelector('.calc-block');
 
@@ -404,13 +415,13 @@ window.addEventListener('DOMContentLoaded', () => {
       const target = event.target;
 
       if (target.matches('select') || target.matches('input')) {
-        countSum(price);
+        const debouncedCountSum = debounce(countSum, 300);
+        debouncedCountSum(price);
       }
     });
   }
 
-  // Calculator sum counter
-  function countSum(price) {
+  function countSum(args) {
     const calcType = document.querySelector('.calc-type'),
       calcSquare = document.querySelector('.calc-square'),
       calcCount = document.querySelector('.calc-count'),
@@ -423,6 +434,7 @@ window.addEventListener('DOMContentLoaded', () => {
       countValue = 1,
       dayValue = 1,
       interval,
+      step,
       currentTotalValue = +calcTotal.textContent;
 
     if (calcCount.value > 1) {
@@ -436,7 +448,13 @@ window.addEventListener('DOMContentLoaded', () => {
     }
 
     if (typeValue && squareValue) {
-      total = Math.floor(price * typeValue * squareValue * countValue * dayValue);
+      total = Math.floor(args * typeValue * squareValue * countValue * dayValue);
+    }
+
+    if (currentTotalValue < total) {
+      step = (total - currentTotalValue) * 0.1;
+    } else if (currentTotalValue > total) {
+      step = (currentTotalValue - total) * 0.1;
     }
 
     calcTotalAnimate();
@@ -445,13 +463,15 @@ window.addEventListener('DOMContentLoaded', () => {
       interval = requestAnimationFrame(calcTotalAnimate);
 
       if (currentTotalValue < total) {
-        currentTotalValue += Math.ceil((total - currentTotalValue) * 0.1);
+        currentTotalValue += Math.floor(step);
         calcTotal.textContent = currentTotalValue;
       } else if (currentTotalValue > total) {
-        currentTotalValue -= Math.ceil((currentTotalValue - total) * 0.1);
+        currentTotalValue -= Math.floor(step);
         calcTotal.textContent = currentTotalValue;
-      } else {
-        cancelAnimationFrame(calcTotalAnimate);
+      } else if (currentTotalValue !== 0 && total !== 0 && currentTotalValue === total) {
+        console.log(2);
+        cancelAnimationFrame(interval);
+        return;
       }
     }
   }
