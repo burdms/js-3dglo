@@ -484,8 +484,15 @@ window.addEventListener('DOMContentLoaded', () => {
     form.addEventListener('submit', event => {
       event.preventDefault();
 
+      statusMessage.innerHTML = `
+      <div class='sk-three-bounce'>
+      <div class='sk-bounce-1 sk-child'></div>
+      <div class='sk-bounce-2 sk-child'></div>
+      <div class='sk-bounce-3 sk-child'></div>
+      </div>
+      `;
+
       form.appendChild(statusMessage);
-      statusMessage.textContent = loadingMessage;
 
       const formData = new FormData(form),
         body = {};
@@ -496,8 +503,10 @@ window.addEventListener('DOMContentLoaded', () => {
 
       postData(body,
         () => {
+          statusMessage.innerHTML = '';
           statusMessage.textContent = successMessage;
         }, error => {
+          statusMessage.innerHTML = '';
           statusMessage.textContent = errorMessage;
           console.error(error);
         });
