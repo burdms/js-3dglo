@@ -329,11 +329,11 @@ window.addEventListener('DOMContentLoaded', () => {
     input.value = input.value.replace(/[^A-Z@-_.!~*']/gi, '');
   }
 
-  // Only numbers, parentheses, and dash
+  // Only numbers and plus sign
   function typeTel(event) {
     const input = event.target;
 
-    input.value = input.value.replace(/[^0-9()-]/gi, '');
+    input.value = input.value.replace(/[^0-9+]/gi, '');
   }
 
   // Check calc inputs
