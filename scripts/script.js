@@ -507,7 +507,7 @@ window.addEventListener('DOMContentLoaded', () => {
         body[key] = value;
       });
 
-    postData(body,
+      postData(body,
         () => {
           statusMessage.innerHTML = '';
           statusMessage.textContent = successMessage;
