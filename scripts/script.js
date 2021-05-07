@@ -507,14 +507,27 @@ window.addEventListener('DOMContentLoaded', () => {
         body[key] = value;
       });
 
-      postData(body,
+    postData(body,
         () => {
           statusMessage.innerHTML = '';
           statusMessage.textContent = successMessage;
+
+          setTimeout(() => {
+            if (form.closest('.popup')) {
+              statusMessage.remove();
+              form.closest('.popup').style.display = 'none';
+            } else {
+              statusMessage.remove();
+            }
+          }, 3000);
+
         }, error => {
-          statusMessage.innerHTML = '';
           statusMessage.textContent = errorMessage;
           console.error(error);
+
+          setTimeout(() => {
+            statusMessage.remove();
+          }, 3000);
         });
     });
 
