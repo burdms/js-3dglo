@@ -504,9 +504,23 @@ window.addEventListener('DOMContentLoaded', () => {
       postData(body,
         () => {
           statusMessage.textContent = successMessage;
+
+          setTimeout(() => {
+            if (form.closest('.popup')) {
+              statusMessage.remove();
+              form.closest('.popup').style.display = 'none';
+            } else {
+              statusMessage.remove();
+            }
+          }, 3000);
+
         }, error => {
           statusMessage.textContent = errorMessage;
           console.error(error);
+
+          setTimeout(() => {
+            statusMessage.remove();
+          }, 3000);
         });
     });
 
