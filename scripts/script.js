@@ -490,45 +490,60 @@ window.addEventListener('DOMContentLoaded', () => {
     form.addEventListener('submit', event => {
       event.preventDefault();
 
-      statusMessage.innerHTML = `
-      <div class='sk-three-bounce'>
-      <div class='sk-bounce-1 sk-child'></div>
-      <div class='sk-bounce-2 sk-child'></div>
-      <div class='sk-bounce-3 sk-child'></div>
-      </div>
-      `;
+      let flag = true;
 
       form.appendChild(statusMessage);
 
-      const formData = new FormData(form),
-        body = {};
-
-      formData.forEach((value, key) => {
-        body[key] = value;
+      form.querySelectorAll('input').forEach(item => {
+        if (!item.value) {
+          flag = false;
+        }
       });
 
-      postData(body,
-        () => {
-          statusMessage.innerHTML = '';
-          statusMessage.textContent = successMessage;
+      if (flag) {
+        statusMessage.innerHTML = `
+          <div class='sk-three-bounce'>
+          <div class='sk-bounce-1 sk-child'></div>
+          <div class='sk-bounce-2 sk-child'></div>
+          <div class='sk-bounce-3 sk-child'></div>
+          </div>
+          `;
 
-          setTimeout(() => {
-            if (form.closest('.popup')) {
-              statusMessage.remove();
-              form.closest('.popup').style.display = 'none';
-            } else {
-              statusMessage.remove();
-            }
-          }, 3000);
+        const formData = new FormData(form),
+          body = {};
 
-        }, error => {
-          statusMessage.textContent = errorMessage;
-          console.error(error);
-
-          setTimeout(() => {
-            statusMessage.remove();
-          }, 3000);
+        formData.forEach((value, key) => {
+          body[key] = value;
         });
+
+        postData(body,
+          () => {
+            statusMessage.textContent = successMessage;
+
+            setTimeout(() => {
+              if (form.closest('.popup')) {
+                statusMessage.remove();
+                form.closest('.popup').style.display = 'none';
+              } else {
+                statusMessage.remove();
+              }
+            }, 3000);
+
+          }, error => {
+            statusMessage.textContent = errorMessage;
+            console.error(error);
+
+            setTimeout(() => {
+              statusMessage.remove();
+            }, 3000);
+          });
+      } else {
+        statusMessage.textContent = 'Необходимо заполнить все поля!';
+
+        setTimeout(() => {
+          statusMessage.remove();
+        }, 3000);
+      }
     });
 
     function postData(body, outputData, errorData) {
