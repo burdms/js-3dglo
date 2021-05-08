@@ -487,12 +487,12 @@ window.addEventListener('DOMContentLoaded', () => {
 
     statusMessage.style.cssText = 'font-size: 2rem; color: #fff;';
 
+    form.appendChild(statusMessage);
+
     form.addEventListener('submit', event => {
       event.preventDefault();
 
       let flag = true;
-
-      form.appendChild(statusMessage);
 
       form.querySelectorAll('input').forEach(item => {
         if (!item.value) {
@@ -523,10 +523,10 @@ window.addEventListener('DOMContentLoaded', () => {
 
               setTimeout(() => {
                 if (form.closest('.popup')) {
-                  statusMessage.remove();
+                  statusMessage.textContent = '';
                   form.closest('.popup').style.display = 'none';
                 } else {
-                  statusMessage.remove();
+                  statusMessage.textContent = '';
                 }
               }, 3000);
             }
@@ -536,14 +536,14 @@ window.addEventListener('DOMContentLoaded', () => {
             console.error(error);
 
             setTimeout(() => {
-              statusMessage.remove();
+              statusMessage.textContent = '';
             }, 3000);
           });
       } else {
         statusMessage.textContent = 'Необходимо заполнить все поля!';
 
         setTimeout(() => {
-          statusMessage.remove();
+          statusMessage.textContent = '';
         }, 3000);
       }
     });
