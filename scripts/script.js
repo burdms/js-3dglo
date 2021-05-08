@@ -516,20 +516,22 @@ window.addEventListener('DOMContentLoaded', () => {
           body[key] = value;
         });
 
-        postData(body,
-          () => {
-            statusMessage.textContent = successMessage;
+        postData(body)
+          .then(
+            () => {
+              statusMessage.textContent = successMessage;
 
-            setTimeout(() => {
-              if (form.closest('.popup')) {
-                statusMessage.remove();
-                form.closest('.popup').style.display = 'none';
-              } else {
-                statusMessage.remove();
-              }
-            }, 3000);
-
-          }, error => {
+              setTimeout(() => {
+                if (form.closest('.popup')) {
+                  statusMessage.remove();
+                  form.closest('.popup').style.display = 'none';
+                } else {
+                  statusMessage.remove();
+                }
+              }, 3000);
+            }
+          )
+          .catch(error => {
             statusMessage.textContent = errorMessage;
             console.error(error);
 
@@ -546,27 +548,28 @@ window.addEventListener('DOMContentLoaded', () => {
       }
     });
 
-    function postData(body, outputData, errorData) {
-      const request = new XMLHttpRequest();
+    function postData(body) {
+      return new Promise((resolve, reject) => {
+        const request = new XMLHttpRequest();
 
-      request.addEventListener('readystatechange', () => {
-        if (request.readyState !== 4) {
-          return;
-        }
+        request.addEventListener('readystatechange', () => {
+          if (request.readyState !== 4) {
+            return;
+          }
 
-        if (request.status === 200) {
-          outputData();
+          if (request.status === 200) {
+            resolve();
+            form.reset();
+          } else {
+            reject(request.status);
+          }
+        });
 
-          form.reset();
-        } else {
-          errorData(request.status);
-        }
+        request.open('POST', './server.php');
+        request.setRequestHeader('Content-Type', 'application/json');
+
+        request.send(JSON.stringify(body));
       });
-
-      request.open('POST', './server.php');
-      request.setRequestHeader('Content-Type', 'application/json');
-
-      request.send(JSON.stringify(body));
     }
   }
 
