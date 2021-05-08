@@ -516,23 +516,22 @@ window.addEventListener('DOMContentLoaded', () => {
         });
 
         postData(body)
-          .then(
-            (response) => {
-              if (response.status !== 200) {
-                throw new Error('Network status is not 200');
-              }
-
-              statusMessage.textContent = successMessage;
-
-              setTimeout(() => {
-                if (form.closest('.popup')) {
-                  statusMessage.textContent = '';
-                  form.closest('.popup').style.display = 'none';
-                } else {
-                  statusMessage.textContent = '';
-                }
-              }, 3000);
+          .then(response => {
+            if (response.status !== 200) {
+              throw new Error('Network status is not 200');
             }
+
+            statusMessage.textContent = successMessage;
+
+            setTimeout(() => {
+              if (form.closest('.popup')) {
+                statusMessage.textContent = '';
+                form.closest('.popup').style.display = 'none';
+              } else {
+                statusMessage.textContent = '';
+              }
+            }, 3000);
+          }
           )
           .catch(error => {
             statusMessage.textContent = errorMessage;
