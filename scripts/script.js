@@ -479,8 +479,7 @@ window.addEventListener('DOMContentLoaded', () => {
   // Send form
   function sendForm(formID) {
     const errorMessage = 'Что-то пошло не так...',
-      successMessage = 'Спасибо! Мы скоро с вами свяжемся',
-      loadingMessage = 'Загрузка...';
+      successMessage = 'Спасибо! Мы скоро с вами свяжемся';
 
     const form = document.getElementById(formID),
       statusMessage = document.createElement('div');
