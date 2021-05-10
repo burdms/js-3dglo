@@ -2,6 +2,8 @@ function countTimer(deadline) {
   const timerHours = document.querySelector('#timer-hours'),
     timerMinutes = document.querySelector('#timer-minutes'),
     timerSeconds = document.querySelector('#timer-seconds');
+
+  updateTimer();
   const interval = setInterval(updateTimer, 1000);
 
   function getTimeRemaining() {
