@@ -2,11 +2,19 @@ class SliderCarousel {
   constructor({
     main,
     wrap,
+    prev,
+    next,
+    position = 0,
 
   }) {
     this.main = document.querySelector(main);
     this.wrap = document.querySelector(wrap);
     this.slides = document.querySelector(wrap).children;
+    this.prev = document.querySelector(prev);
+    this.next = document.querySelector(next);
+    this.options = {
+      position,
+    };
   }
 
   init() {
@@ -42,6 +50,16 @@ class SliderCarousel {
         margin: auto 0 !important;
       }
     `;
+
+    document.head.appendChild(style);
+  }
+
+  controlSlider() {
+
+  }
+
+  addArrows() {
+
   }
 }
 
