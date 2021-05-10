@@ -12,10 +12,7 @@ function calculator(price) {
 
     let total = 0,
       countValue = 1,
-      dayValue = 1,
-      interval,
-      step,
-      currentTotalValue = +calcTotal.textContent;
+      dayValue = 1;
 
     if (calcCount.value > 1) {
       countValue += (calcCount.value - 1) / 10;
@@ -31,29 +28,7 @@ function calculator(price) {
       total = Math.floor(price * typeValue * squareValue * countValue * dayValue);
     }
 
-    if (currentTotalValue < total) {
-      step = (total - currentTotalValue) * 0.1;
-    } else if (currentTotalValue > total) {
-      step = (currentTotalValue - total) * 0.1;
-    }
-
-    calcTotalAnimate();
-
-    function calcTotalAnimate() {
-      interval = requestAnimationFrame(calcTotalAnimate);
-
-      if (currentTotalValue < total) {
-        currentTotalValue += Math.floor(step);
-        calcTotal.textContent = currentTotalValue;
-      } else if (currentTotalValue > total) {
-        currentTotalValue -= Math.floor(step);
-        calcTotal.textContent = currentTotalValue;
-      } else if (currentTotalValue !== 0 && total !== 0 && currentTotalValue === total) {
-        console.log(2);
-        cancelAnimationFrame(interval);
-        return;
-      }
-    }
+    calcTotal.textContent = total;
   }
 
   calcBlock.addEventListener('input', event => {
