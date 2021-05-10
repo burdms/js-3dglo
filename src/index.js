@@ -18,7 +18,7 @@ import calculator from './modules/calculator';
 import sendForm from './modules/sendForm';
 
 // Timer
-countTimer('22 april 2021');
+countTimer('13 may 2021');
 
 // Toggle menu
 toggleMenu();

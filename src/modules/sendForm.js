@@ -14,7 +14,7 @@ function sendForm(formID) {
 
     let flag = true;
 
-    form.querySelectorAll('input').forEach(item => {
+    form.querySelectorAll('input:not([placeholder="Ваше сообщение"])').forEach(item => {
       if (!item.value) {
         flag = false;
       }
@@ -42,6 +42,7 @@ function sendForm(formID) {
             throw new Error('Network status is not 200');
           }
 
+          form.reset();
           statusMessage.textContent = successMessage;
 
           setTimeout(() => {
@@ -52,8 +53,7 @@ function sendForm(formID) {
               statusMessage.textContent = '';
             }
           }, 3000);
-        }
-        )
+        })
         .catch(error => {
           statusMessage.textContent = errorMessage;
           console.error(error);
