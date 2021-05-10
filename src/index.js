@@ -16,6 +16,7 @@ import checkTextArea from './modules/checkTextArea';
 import checkAllInputs from './modules/checkAllInputs';
 import calculator from './modules/calculator';
 import sendForm from './modules/sendForm';
+import SliderCarousel from './modules/SliderCarousel';
 
 // Timer
 countTimer('22 april 2021');
@@ -63,3 +64,11 @@ calculator(100);
 sendForm('form1');
 sendForm('form2');
 sendForm('form3');
+
+// Slider carousel (clients)
+const carousel = new SliderCarousel({
+  main: '.companies-wrapper',
+  wrap: '.companies-hor',
+});
+
+carousel.init();
