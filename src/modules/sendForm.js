@@ -23,9 +23,9 @@ function sendForm(formID) {
     if (flag) {
       statusMessage.innerHTML = `
           <div class='sk-three-bounce'>
-          <div class='sk-bounce-1 sk-child'></div>
-          <div class='sk-bounce-2 sk-child'></div>
-          <div class='sk-bounce-3 sk-child'></div>
+            <div class='sk-bounce-1 sk-child'></div>
+            <div class='sk-bounce-2 sk-child'></div>
+            <div class='sk-bounce-3 sk-child'></div>
           </div>
           `;
 
