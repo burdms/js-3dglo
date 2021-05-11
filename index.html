@@ -5,9 +5,19 @@
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Document</title>
+
+  <style>
+    #paint {
+      border: 1px solid black;
+    }
+  </style>
 </head>
 <body>
-  <canvas id="olympics" width="400" height="250"></canvas>
+  <canvas id="olympics" width="400" height="200"></canvas>
+  <br>
+  <canvas id="paint" width="350" height="350"></canvas>
+  <input type="color" id="color">
+  <input type="range" id="size" step="1" min="1" max="10" value="1">
 
   <script src="main.js"></script>
 </body>
