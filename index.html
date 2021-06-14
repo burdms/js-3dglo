@@ -75,11 +75,11 @@
         </div>
         <div class="timer-action">До конца акции осталось</div>
         <div class="timer-numbers" id="timer">
-          <span id="timer-hours">19</span>
+          <span id="timer-hours"></span>
           <span>:</span>
-          <span id="timer-minutes">45</span>
+          <span id="timer-minutes"></span>
           <span>:</span>
-          <span id="timer-seconds">12</span>
+          <span id="timer-seconds"></span>
         </div>
       </div>
       <form id="form1" name="user_form" class="main-form">
@@ -172,7 +172,7 @@
           </div>
         </div>
 
-        <div class="service-tab row">
+        <div class="service-tab row d-none">
           <div class="col-md-6 col-sm-6">
             <img src="images/service/service-2.png" alt="" />
           </div>
@@ -188,7 +188,7 @@
           </div>
         </div>
 
-        <div class="service-tab row">
+        <div class="service-tab row d-none">
           <div class="service-outer col-md-6 col-sm-6 col-12">
             <div class="service-inner">
               <p>
@@ -230,14 +230,7 @@
           </li>
           <a href="#" class="portfolio-btn prev" id="arrow-left"></a>
           <a href="#" class="portfolio-btn next" id="arrow-right"></a>
-          <ul class="portfolio-dots">
-            <li class="dot dot-active"></li>
-            <li class="dot"></li>
-            <li class="dot"></li>
-            <li class="dot"></li>
-            <li class="dot"></li>
-            <li class="dot"></li>
-          </ul>
+          <ul class="portfolio-dots"></ul>
         </ul>
       </div>
     </div>
@@ -455,6 +448,7 @@
                   </div>
                   <div class="col-md-12 col-sm-12 col-12">
                     <input
+                      type="text"
                       class="mess"
                       id="form2-message"
                       name="user_message"
@@ -578,6 +572,89 @@
       </div>
     </div>
 
-    <script src="./scripts/script.js"></script>
+    <!-- <script src="./assets/validate/validate.js"></script>
+    
+    <script>
+      const validateForm1 = new Validate({
+        selector: '#form1',
+        pattern: {
+          // tel: /^\+?380\d{7}$/,
+          zip: /^\d{5,6}$/,
+          text: /[а-яё]/gi,
+        },
+        method: {
+          'tel': [
+            ['notEmpty'],
+            ['pattern', 'tel']
+          ],
+
+          'email': [
+            ['notEmpty'],
+            ['pattern', 'email']
+          ],
+
+          'text': [
+            ['notEmpty'],
+            ['pattern', 'text']
+          ],
+        },
+      });
+
+      const validateForm3 = new Validate({
+        selector: '#form3',
+        pattern: {
+          tel: /^\+?380\d{7}$/,
+          zip: /^\d{5,6}$/,
+          text: /[а-яё]/gi,
+        },
+        method: {
+          'tel': [
+            ['notEmpty'],
+            ['pattern', 'tel']
+          ],
+
+          'email': [
+            ['notEmpty'],
+            ['pattern', 'email']
+          ],
+
+          'text': [
+            ['notEmpty'],
+            ['pattern', 'text']
+          ],
+        },
+      });
+
+      const validateForm2 = new Validate({
+        selector: '#form2',
+        pattern: {
+          tel: /^\+?380\d{7}$/,
+          zip: /^\d{5,6}$/,
+          text: /[а-яё]/gi,
+        },
+        method: {
+          'tel': [
+            ['notEmpty'],
+            ['pattern', 'tel']
+          ],
+
+          'email': [
+            ['notEmpty'],
+            ['pattern', 'email']
+          ],
+
+          'text': [
+            ['notEmpty'],
+            ['pattern', 'text']
+          ],
+        },
+      });
+
+      validateForm1.init();
+      validateForm2.init();
+      validateForm3.init();
+    </script> -->
+
+    <script src="./dist/main.js"></script>
   </body>
 </html>
